@@ -55,7 +55,7 @@ export default function Skills() {
       <ul className="grid grid-cols-2 justify-items-center gap-5 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-12 xl:grid-cols-5">
         {skills.map(({ title, icon: Icon }) => (
           <SkillCard key={title} title={title}>
-            <span className="inline-flex h-12 w-12 items-center justify-center text-primary-black transition-colors duration-300 group-hover:text-primary-white">
+            <span className="inline-flex h-12 w-12 items-center justify-center text-primary-black transition-colors duration-300 group-hover:text-primary-white [&>svg]:h-12 [&>svg]:w-12">
               <Icon aria-hidden="true" />
             </span>
           </SkillCard>
