@@ -1,0 +1,35 @@
+import { motion } from "motion/react";
+import LinkIcon from "@app/assets/link.svg?react";
+import GitHubIcon from "@app/assets/social/github.svg?react";
+import { useCursorHover } from "@app/hooks/useCursorHover";
+import { ProjectType } from "@app/types/project";
+
+type Props = { project: ProjectType };
+
+export default function Project({ project }: Props) {
+  const { handleMouseEnter, handleMouseLeave } = useCursorHover();
+  const { id, title, description, technologies, demo, ariaLabel, github } = project;
+
+  return (
+    <motion.article initial={{ x: 75, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.9, type: "spring" }} viewport={{ once: true }} className="bg-primary-black text-primary-white flex flex-grow flex-col items-start gap-8 rounded-lg border-2 px-3 py-5 md:p-10 xl:p-12">
+      <div className="flex flex-col gap-5">
+        <p className="text-primary-white text-2xl font-extrabold md:text-4xl">{id < 10 ? `0${id}` : id}</p>
+        <h3 className="text-primary-white text-xl font-extrabold tracking-tight md:text-3xl">{title}</h3>
+      </div>
+      <p className="flex-grow leading-relaxed text-zinc-300" onMouseEnter={() => handleMouseEnter(150)} onMouseLeave={() => handleMouseLeave(40)}>{description}</p>
+      <div className="flex flex-col gap-2">
+        <span className="font-extrabold">Technologies:</span>
+        <ul className="flex flex-wrap gap-2">
+          {technologies.map((tech) => <li key={tech} className="rounded-full bg-neutral-100 px-3 py-1 text-sm font-medium text-neutral-700 shadow-sm">{tech}</li>)}
+        </ul>
+      </div>
+      {(demo || github) && (
+        <div className="flex gap-4 pt-2">
+          {demo && <a href={demo} aria-label={ariaLabel.demo} target="_blank" rel="noopener noreferrer" className="rounded-full bg-neutral-100 p-2 transition-colors hover:bg-neutral-200"><LinkIcon className="h-6 w-6 text-neutral-800" /></a>}
+          {github && <a href={github} aria-label={ariaLabel.github} target="_blank" rel="noopener noreferrer" className="rounded-full bg-neutral-100 p-2 transition-colors hover:bg-neutral-200"><GitHubIcon className="h-6 w-6 text-neutral-800" /></a>}
+          {!github && id === 1 && <span className="self-center text-sm text-zinc-400">Private project</span>}
+        </div>
+      )}
+    </motion.article>
+  );
+}

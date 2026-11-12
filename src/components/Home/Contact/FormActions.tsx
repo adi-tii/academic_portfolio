@@ -1,0 +1,20 @@
+import SocialCard from "@app/components/Home/Hero/SocialCard";
+import LinkedinIcon from "@app/assets/social/linkedin.svg?react";
+import GmailIcon from "@app/assets/social/gmail.svg?react";
+import GitHubIcon from "@app/assets/social/github.svg?react";
+import { profile } from "@app/data/profile";
+
+export default function FormActions({ isClicked }: { isClicked: boolean }) {
+  return (
+    <div className="flex flex-col justify-between gap-5 md:flex-row">
+      <button type="submit" disabled={isClicked} className="group text-primary-white bg-primary-black hover:text-primary-black hover:bg-primary-white hover:shadow-bottom flex-center disabled:cursor-not-allowed disabled:opacity-60 relative h-14 w-[153px] cursor-pointer gap-2 rounded px-4 py-3 font-semibold transition-all enabled:active:translate-y-1 md:border-2 xl:w-44">
+        {isClicked ? "Sending..." : "Get In Touch"}
+      </button>
+      <div className="flex gap-3 md:justify-evenly md:gap-5">
+        <SocialCard path={profile.linkedin} aria-label="LinkedIn"><LinkedinIcon className="group-hover:fill-primary-white h-5 w-5" /></SocialCard>
+        <SocialCard path={`mailto:${profile.email}`} aria-label="Email"><GmailIcon className="group-hover:fill-primary-white h-5 w-5" /></SocialCard>
+        <SocialCard path={profile.github} aria-label="GitHub"><GitHubIcon className="group-hover:fill-primary-white h-5 w-5" /></SocialCard>
+      </div>
+    </div>
+  );
+}
