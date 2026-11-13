@@ -1,3 +1,4 @@
+
 import AboutMe from "@app/components/Home/AboutMe/AboutMe";
 import Contact from "@app/components/Home/Contact/Contact";
 import Hero from "@app/components/Home/Hero/Hero";
@@ -13,8 +14,8 @@ export default function Home() {
       <Hero />
       <Skills />
       <AboutMe />
-      <Projects />
       <Research />
+      <Projects />
       <Publications />
       <Contact />
       <UpButton />

@@ -1,42 +1,445 @@
+
+import { useState } from "react";
 import { motion } from "motion/react";
 import { profile } from "@app/data/profile";
+import { useCursorHover } from "@app/hooks/useCursorHover";
 
 export default function Research() {
+  const { handleMouseEnter, handleMouseLeave } = useCursorHover();
+
+  const [benchmarksOpen, setBenchmarksOpen] = useState(false);
+  const [architectureOpen, setArchitectureOpen] = useState(false);
+
+  const technologyStack = [
+    {
+      category: "Systems & Model Interoperability",
+      items: ["Rust", "C/C++", "Python", "PyTorch", "ONNX", "ONNX Runtime"],
+    },
+    {
+      category: "Hardware Acceleration",
+      items: [
+        "NVIDIA TensorRT",
+        "CUDA",
+        "Qualcomm QNN / QAIRT",
+        "TI TIDL / DLR",
+        "OpenVINO",
+      ],
+    },
+    {
+      category: "Vision & Communication",
+      items: ["ROS 2", "gRPC", "Protocol Buffers"],
+    },
+    {
+      category: "Deployment & Observability",
+      items: [
+        "Docker",
+        "Linux",
+        "GitHub Actions",
+        "OpenTelemetry",
+        "Prometheus",
+        "Grafana",
+      ],
+    },
+  ];
+
+  const capabilities = [
+    {
+      title: "Hardware-Agnostic Inference",
+      description:
+        "Unified middleware and backend abstraction for executing models across heterogeneous CPUs, GPUs, DSPs and NPUs.",
+    },
+    {
+      title: "Model Optimization & Deployment",
+      description:
+        "ONNX-based model conversion, hardware-specific compilation, quantization and optimized deployment artifact generation.",
+    },
+    {
+      title: "Accelerator Integration",
+      description:
+        "Native inference execution through NVIDIA TensorRT/CUDA, Qualcomm QNN/QAIRT and TI TIDL/DLR.",
+    },
+    {
+      title: "Vision Pipeline Integration",
+      description:
+        "Camera-based inference, ROS 2 integration, gRPC communication and real-time result processing.",
+    },
+    {
+      title: "Performance Engineering",
+      description:
+        "Cross-platform benchmarking, latency and throughput profiling, accuracy evaluation and resource monitoring.",
+    },
+    {
+      title: "Deployment & Observability",
+      description:
+        "Containerized deployment, automated hardware validation and runtime telemetry across edge platforms.",
+    },
+  ];
+
+  const benchmarks = [
+    {
+      hardware: "NVIDIA Thor",
+      precision: "FP8",
+      top1: "78.96%",
+      top5: "88.30%",
+      latency: "0.808 ms",
+      throughput: "1,237.6 FPS",
+    },
+    {
+      hardware: "NVIDIA Orin",
+      precision: "INT8",
+      top1: "72.90%",
+      top5: "85.40%",
+      latency: "1.688 ms",
+      throughput: "741.24 FPS",
+    },
+    {
+      hardware: "TI TDA4",
+      precision: "FP16",
+      top1: "78.11%",
+      top5: "94.27%",
+      latency: "10.80 ms",
+      throughput: "92.60 FPS",
+    },
+    {
+      hardware: "Qualcomm",
+      precision: "INT8",
+      top1: "71.32%",
+      top5: "90.80%",
+      latency: "1.680 ms",
+      throughput: "184.55 FPS",
+    },
+  ];
+
+  const DropdownArrow = ({ isOpen }: { isOpen: boolean }) => (
+    <motion.span
+      animate={{ rotate: isOpen ? 180 : 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-white bg-white text-primary-black shadow-md"
+      aria-hidden="true"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-6 w-6"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </motion.span>
+  );
+
   return (
-    <section id="research" className="bg-primary-white px-4 py-12 sm:px-6 md:px-20 md:py-20 lg:px-28">
+    <section
+      id="research"
+      className="bg-primary-white px-4 py-12 sm:px-6 md:px-20 md:py-20 lg:px-28"
+    >
       <h2 className="mb-10 text-center text-[28px]/[114%] tracking-tight lg:text-[48px]/[114%]">
-        <span className="pr-2 md:pr-4">Research</span><span className="font-extrabold">& Experience</span>
+        <span className="pr-2 md:pr-4">Research</span>
+        <span className="font-extrabold">& Experience</span>
       </h2>
-      <motion.article initial={{ y: 60, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, type: "spring" }} viewport={{ once: true }} className="bg-primary-black text-primary-white rounded-lg border-2 p-6 md:p-10">
+
+      <motion.article
+        initial={{ y: 60, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, type: "spring" }}
+        viewport={{ once: true }}
+        className="bg-primary-black rounded-lg border-2 p-6 text-primary-white md:p-10"
+      >
+        {/* Project Header */}
         <div className="flex flex-col justify-between gap-3 md:flex-row md:items-start">
           <div>
-            <p className="text-sm font-semibold text-zinc-400">INDUSTRY–ACADEMIA COLLABORATION</p>
-            <h3 className="mt-2 text-2xl font-extrabold md:text-3xl">Hardware-Agnostic Edge AI Middleware</h3>
-            <p className="mt-2 text-zinc-300">Research and Software Developer Intern · Magna International</p>
+            <p className="text-sm font-semibold text-zinc-400">
+              INDUSTRY–ACADEMIA COLLABORATION
+            </p>
+
+            <h3 className="mt-2 text-2xl font-extrabold md:text-3xl">
+              Hardware-Agnostic Edge AI Model Deployment & Inference Platform
+            </h3>
+
+            <p className="mt-2 text-zinc-300">
+              Research and Software Developer Intern · Magna International
+            </p>
           </div>
-          <span className="text-sm text-zinc-400">May 2026 – Present · Remote</span>
+
+          <span className="text-sm text-zinc-400">
+            May 2026 – Present · Remote
+          </span>
         </div>
-        <p className="mt-6 leading-relaxed text-zinc-300">
-          Working on a hardware-agnostic Edge AI middleware designed to run AI models across heterogeneous hardware accelerators through a unified inference interface. Independently developed the Qualcomm backend, integrating Qualcomm QNN and QAIRT for native model execution on Qualcomm hardware. The work includes inference integration, tensor handling, hardware compatibility and INT8-quantized model execution.
-        </p>
-        <div className="mt-6">
-          <p className="font-bold">Research and engineering focus</p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {["C++", "Rust", "Qualcomm QNN", "QAIRT", "ONNX Runtime", "INT8 Quantization", "Docker", "Linux", "MobileNetV4", "Radxa Dragon Q6A", "Qualcomm NPU"].map((item) => (
-              <li key={item} className="rounded-full bg-neutral-100 px-3 py-1 text-sm font-medium text-neutral-700">{item}</li>
+
+        {/* Project Overview */}
+        <motion.div
+          className="mt-6"
+          onMouseEnter={() => handleMouseEnter(150)}
+          onMouseLeave={() => handleMouseLeave(40)}
+        >
+          <p className="leading-relaxed text-zinc-300">
+            An end-to-end Edge AI deployment platform designed to optimize and
+            execute deep learning models across heterogeneous System-on-Chips
+            (SoCs), including NVIDIA, Qualcomm and Texas Instruments. The
+            platform establishes a unified model deployment and inference
+            architecture, combining hardware-specific model optimization,
+            accelerator integration and a modular, hardware-agnostic middleware.
+            It supports portable model execution, precision-aware optimization,
+            real-time vision inference, cross-platform benchmarking and runtime
+            observability across diverse edge computing environments.
+          </p>
+        </motion.div>
+
+        {/* Core Capabilities */}
+        <div className="mt-8">
+          <p className="font-bold">Core Capabilities</p>
+
+          <div className="mt-4 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            {capabilities.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{
+                  y: -4,
+                  scale: 1.01,
+                  backgroundColor: "rgba(255,255,255,0.07)",
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeOut",
+                  delay: index * 0.06,
+                }}
+                viewport={{ once: true }}
+                className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 transition-colors duration-300 hover:border-zinc-600"
+              >
+                <p className="font-semibold text-primary-white">
+                  {item.title}
+                </p>
+
+                <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+                  {item.description}
+                </p>
+              </motion.div>
             ))}
-          </ul>
+          </div>
         </div>
-        <div className="mt-8 grid gap-4 border-t border-zinc-700 pt-6 sm:grid-cols-3">
-          {[["72.9%", "ImageNet Top-1 accuracy"], ["1.68 ms", "Average inference latency"], ["184.55 FPS", "Throughput"]].map(([value, label]) => (
-            <div key={label}><p className="text-3xl font-extrabold">{value}</p><p className="mt-1 text-sm text-zinc-400">{label}</p></div>
-          ))}
+
+        {/* Technology Stack */}
+        <div className="mt-8 border-t border-zinc-700 pt-6">
+          <p className="font-bold">Technology Stack</p>
+
+          <div className="mt-4 space-y-5">
+            {technologyStack.map((group) => (
+              <div key={group.category}>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                  {group.category}
+                </p>
+
+                <ul className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <motion.li
+                      key={item}
+                      whileHover={{ y: -3, scale: 1.04 }}
+                      transition={{ duration: 0.2 }}
+                      className="rounded-full bg-neutral-100 px-3 py-1 text-sm font-medium text-neutral-700 shadow-sm transition-colors duration-200 hover:bg-zinc-300"
+                    >
+                      {item}
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-        <p className="mt-4 text-xs text-zinc-500">Validated on the 50,000-image ImageNet validation set. Project source code is private.</p>
+
+        {/* Cross-Platform Benchmarks */}
+        <div className="mt-8 border-t border-zinc-700 pt-6">
+          <button
+            type="button"
+            aria-expanded={benchmarksOpen}
+            aria-controls="benchmark-content"
+            onClick={() => setBenchmarksOpen((open) => !open)}
+            className="flex w-full cursor-pointer items-center justify-between gap-4 rounded-md py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+          >
+            <div>
+              <p className="font-bold">
+                Cross-Platform Benchmark Results
+              </p>
+
+              <p className="mt-1 text-sm text-zinc-400">
+                MobileNetV4 · ImageNet 50,000-image validation set
+              </p>
+            </div>
+
+            <DropdownArrow isOpen={benchmarksOpen} />
+          </button>
+
+          <motion.div
+            id="benchmark-content"
+            initial={false}
+            animate={{
+              height: benchmarksOpen ? "auto" : 0,
+              opacity: benchmarksOpen ? 1 : 0,
+            }}
+            transition={{
+              height: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+              opacity: { duration: 0.3, ease: "easeInOut" },
+            }}
+            className="overflow-hidden"
+            aria-hidden={!benchmarksOpen}
+          >
+            <div className="mt-5 overflow-x-auto">
+              <table className="w-full min-w-[650px] border-collapse text-left text-sm">
+                <thead>
+                  <tr className="border-b border-zinc-700 text-xs uppercase tracking-wide text-zinc-400">
+                    <th className="pb-3 pr-4">Hardware</th>
+                    <th className="pb-3 pr-4">Precision</th>
+                    <th className="pb-3 pr-4">Top-1 Acc.</th>
+                    <th className="pb-3 pr-4">Top-5 Acc.</th>
+                    <th className="pb-3 pr-4">Latency</th>
+                    <th className="pb-3">Throughput</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {benchmarks.map((item) => (
+                    <motion.tr
+                      key={item.hardware}
+                      whileHover={{
+                        backgroundColor: "rgba(255,255,255,0.07)",
+                      }}
+                      transition={{ duration: 0.2 }}
+                      className="border-b border-zinc-800 last:border-0"
+                    >
+                      <td className="py-4 pr-4 font-semibold">
+                        {item.hardware}
+                      </td>
+
+                      <td className="py-4 pr-4 text-zinc-300">
+                        {item.precision}
+                      </td>
+
+                      <td className="py-4 pr-4 text-zinc-300">
+                        {item.top1}
+                      </td>
+
+                      <td className="py-4 pr-4 text-zinc-300">
+                        {item.top5}
+                      </td>
+
+                      <td className="py-4 pr-4 text-zinc-300">
+                        {item.latency}
+                      </td>
+
+                      <td className="py-4 font-semibold">
+                        {item.throughput}
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-4 text-xs leading-relaxed text-zinc-500">
+              Benchmarked across NVIDIA Thor, NVIDIA Orin, TI TDA4 and
+              Qualcomm Dragon Radxa Q6a platforms using hardware-specific
+              precision configurations. Performance varies by hardware,
+              runtime and execution configuration.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Runtime Observability */}
+        <div className="mt-5 rounded-lg bg-zinc-900 p-4">
+          <p className="font-semibold text-primary-white">
+            Runtime Observability
+          </p>
+
+          <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+            OpenTelemetry integration for collecting and exporting runtime
+            telemetry, including inference latency, throughput, memory
+            utilization and hardware-level performance.
+          </p>
+        </div>
+
+        {/* Project Architecture */}
         <div className="mt-6 border-t border-zinc-700 pt-5">
-          <p className="font-bold">Additional academic and engineering work</p>
-          <p className="mt-2 leading-relaxed text-zinc-300">Academic and team projects across cloud computing, big data analytics, machine learning and software development. I also mentor juniors beginning their work in the Edge AI domain.</p>
-          <a href={profile.orcid} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block font-semibold text-blue-400 underline underline-offset-4">ORCID profile ↗</a>
+          <button
+            type="button"
+            aria-expanded={architectureOpen}
+            aria-controls="architecture-content"
+            onClick={() => setArchitectureOpen((open) => !open)}
+            className="flex w-full cursor-pointer items-center justify-between gap-4 rounded-md py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+          >
+            <div>
+              <p className="font-bold">Project Architecture</p>
+
+              <p className="mt-1 text-sm text-zinc-400">
+                Explore the complete system architecture, model deployment
+                pipelines, hardware-specific backends and inference execution
+                workflows.
+              </p>
+            </div>
+
+            <DropdownArrow isOpen={architectureOpen} />
+          </button>
+
+          <motion.div
+            id="architecture-content"
+            initial={false}
+            animate={{
+              height: architectureOpen ? "auto" : 0,
+              opacity: architectureOpen ? 1 : 0,
+            }}
+            transition={{
+              height: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+              opacity: { duration: 0.3, ease: "easeInOut" },
+            }}
+            className="overflow-hidden"
+            aria-hidden={!architectureOpen}
+          >
+            <div className="mt-5 rounded-lg border border-zinc-700 bg-zinc-900 p-5">
+              <p className="font-semibold">System Architecture</p>
+
+              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                A detailed overview of the hardware-agnostic middleware,
+                accelerator backends, model deployment pipeline and inference
+                execution workflow will be available here.
+              </p>
+
+              <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                Architecture diagrams coming soon
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Additional Academic & Engineering Work */}
+        <div className="mt-6 border-t border-zinc-700 pt-5">
+          <p className="font-bold">
+            Additional academic and engineering work
+          </p>
+
+          <motion.div
+            onMouseEnter={() => handleMouseEnter(150)}
+            onMouseLeave={() => handleMouseLeave(40)}
+          >
+            <p className="mt-2 leading-relaxed text-zinc-300">
+              Academic and team projects across AI-ML, big data analytics,
+              computer networks, embedded intelligent systems and software
+              development. I also mentor juniors beginning their work in the
+              Edge AI domain.
+            </p>
+          </motion.div>
+
+          <a
+            href={profile.orcid}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-block font-semibold text-blue-400 underline underline-offset-4 transition-colors duration-300 hover:text-blue-300"
+          >
+            ORCID profile ↗
+          </a>
         </div>
       </motion.article>
     </section>
