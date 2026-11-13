@@ -62,5 +62,19 @@ export const projectsData: ProjectType[] = [
     github: "https://github.com/hegdev13/sports-arena-court-booking",
     technologies: ["Next.js", "Prisma", "PostgreSQL", "NextAuth", "JWT", "REST APIs"],
     ariaLabel: { demo: "Sports Arena demonstration", github: "Sports Arena source code on GitHub" }
+  },
+  {
+    id: 6,
+    title: "IndicVision: Offline Edge AI Translation",
+    description:
+      "An offline Android translation pipeline combining CRAFT text detection, EasyOCR recognition and IndicTrans2 translation to convert image text from five Indian languages into English. Integrated ONNX Runtime CPU/NNAPI execution providers, configurable CPU thread pools and memory-mapped loading for large INT8 Transformer models to reduce JVM heap pressure and support efficient on-device inference.",
+    demo: "",
+    github: "https://github.com/adi-tii/IndicVision",
+    technologies: ["Kotlin", "ONNX Runtime", "CRAFT", "EasyOCR", "IndicTrans2", "INT8"],
+    ariaLabel: {
+      demo: "IndicVision demonstration",
+      github: "IndicVision source code on GitHub"
+    }
   }
+
 ];
