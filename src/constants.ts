@@ -20,7 +20,7 @@ export const projectsData: ProjectType[] = [
       "Industry–academia collaboration with Magna International (May 2026–Present). Contributed to a modular middleware for ahead-of-time compiled inference across NVIDIA, Qualcomm and TI backends, independently developing the Qualcomm deployment pipeline. Deployed MobileNetV4 end to end on the Radxa Dragon Q6A using Docker, QAIRT/QNN, INT8 quantization and on-device context generation. Validated on the 50,000-image ImageNet validation set, achieving 72.9% Top-1 accuracy, 1.68 ms average inference latency and 184.55 FPS throughput.",
     demo: "",
     github: "",
-    technologies: ["C++", "Rust", "Qualcomm QNN", "QAIRT", "ONNX", "Docker", "INT8 Quantization"],
+    technologies: ["C++", "Rust", "gRPC", "QAIRT", "ONNX", "Docker", "OpenVINO", "ROS2"],
     ariaLabel: { demo: "Project demonstration unavailable", github: "Private project repository" }
   },
   {
@@ -60,7 +60,7 @@ export const projectsData: ProjectType[] = [
       "A full-stack court booking platform covering seven courts across badminton, table tennis and squash. Implemented real-time availability backed by a four-entity PostgreSQL schema using Prisma ORM. Prevented double-booking at the database layer with a unique constraint and added role-based access for student, staff and admin roles using NextAuth, JWT and REST API endpoints.",
     demo: "",
     github: "https://github.com/hegdev13/sports-arena-court-booking",
-    technologies: ["Next.js", "Prisma", "PostgreSQL", "NextAuth", "JWT", "REST APIs"],
+    technologies: ["Next.js", "React", "Prisma", "PostgreSQL", "NextAuth", "JWT", "REST APIs"],
     ariaLabel: { demo: "Sports Arena demonstration", github: "Sports Arena source code on GitHub" }
   },
   {
