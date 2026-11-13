@@ -1,14 +1,62 @@
 
-import { useState } from "react";
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { profile } from "@app/data/profile";
 import { useCursorHover } from "@app/hooks/useCursorHover";
+
+const architectureDiagrams = [
+  {
+    title: "Middleware Architecture",
+    description: "End-to-end middleware and heterogeneous backend architecture.",
+    src: `${import.meta.env.BASE_URL}img/architecture/overall-architecture.png`,
+    alt: "Hardware-agnostic middleware architecture diagram",
+  },
+  {
+    title: "NVIDIA Backend Pipeline",
+    description: "Model optimization, deployment and TensorRT inference workflow.",
+    src: `${import.meta.env.BASE_URL}img/architecture/nvidia-pipeline.png`,
+    alt: "NVIDIA TensorRT backend pipeline diagram",
+  },
+  {
+    title: "Qualcomm Backend Pipeline",
+    description: "QAIRT conversion, native context generation and QNN execution.",
+    src: `${import.meta.env.BASE_URL}img/architecture/qualcomm-pipeline.png`,
+    alt: "Qualcomm QNN backend pipeline diagram",
+  },
+  {
+    title: "TI Backend Pipeline",
+    description: "TIDL model optimization and runtime execution workflow.",
+    src: `${import.meta.env.BASE_URL}img/architecture/ti-pipeline.png`,
+    alt: "Texas Instruments TIDL backend pipeline diagram",
+  },
+];
 
 export default function Research() {
   const { handleMouseEnter, handleMouseLeave } = useCursorHover();
 
   const [benchmarksOpen, setBenchmarksOpen] = useState(false);
   const [architectureOpen, setArchitectureOpen] = useState(false);
+  const [selectedDiagram, setSelectedDiagram] = useState<
+    (typeof architectureDiagrams)[number] | null
+  >(null);
+
+  useEffect(() => {
+    if (!selectedDiagram) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedDiagram(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [selectedDiagram]);
 
   const technologyStack = [
     {
@@ -200,9 +248,7 @@ export default function Research() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{
-                  y: -4,
-                  scale: 1.01,
-                  backgroundColor: "rgba(255,255,255,0.07)",
+                  backgroundColor: "#ffffff",
                 }}
                 transition={{
                   duration: 0.3,
@@ -210,13 +256,13 @@ export default function Research() {
                   delay: index * 0.06,
                 }}
                 viewport={{ once: true }}
-                className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 transition-colors duration-300 hover:border-zinc-600"
+                className="group rounded-lg border border-zinc-800 bg-zinc-950 p-4 transition-colors duration-300 hover:border-white"
               >
-                <p className="font-semibold text-primary-white">
+                <p className="font-semibold text-primary-white transition-colors duration-300 group-hover:text-black">
                   {item.title}
                 </p>
 
-                <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+                <p className="mt-1 text-sm leading-relaxed text-zinc-400 transition-colors duration-300 group-hover:text-zinc-700">
                   {item.description}
                 </p>
               </motion.div>
@@ -262,9 +308,7 @@ export default function Research() {
             className="flex w-full cursor-pointer items-center justify-between gap-4 rounded-md py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black"
           >
             <div>
-              <p className="font-bold">
-                Cross-Platform Benchmark Results
-              </p>
+              <p className="font-bold">Cross-Platform Benchmark Results</p>
 
               <p className="mt-1 text-sm text-zinc-400">
                 MobileNetV4 · ImageNet 50,000-image validation set
@@ -398,18 +442,45 @@ export default function Research() {
             className="overflow-hidden"
             aria-hidden={!architectureOpen}
           >
-            <div className="mt-5 rounded-lg border border-zinc-700 bg-zinc-900 p-5">
-              <p className="font-semibold">System Architecture</p>
-
-              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                A detailed overview of the hardware-agnostic middleware,
-                accelerator backends, model deployment pipeline and inference
-                execution workflow will be available here.
+            <div className="mt-5">
+              <p className="mb-4 text-sm leading-relaxed text-zinc-400">
+                Select a diagram to explore the middleware architecture and
+                individual hardware backend workflows.
               </p>
 
-              <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
-                Architecture diagrams coming soon
-              </p>
+              <div className="flex gap-4 overflow-x-auto pb-4">
+                {architectureDiagrams.map((diagram, index) => (
+                  <motion.button
+                    key={diagram.title}
+                    type="button"
+                    onClick={() => setSelectedDiagram(diagram)}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.2 }}
+                    className="group w-64 shrink-0 cursor-pointer overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 text-left transition-colors duration-300 hover:border-zinc-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                    aria-label={`View larger image: ${diagram.title}`}
+                  >
+                    <div className="flex h-40 items-center justify-center overflow-hidden bg-white p-2">
+                      <img
+                        src={diagram.src}
+                        alt={diagram.alt}
+                        loading="lazy"
+                        className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+
+                    <div className="p-4">
+                      <p className="text-sm font-semibold text-primary-white">
+                        {String(index + 1).padStart(2, "0")} · {diagram.title}
+                      </p>
+
+                      <p className="mt-3 text-xs font-semibold text-blue-400 transition-colors group-hover:text-blue-300">
+                        Click to enlarge ↗
+                      </p>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -442,6 +513,67 @@ export default function Research() {
           </a>
         </div>
       </motion.article>
+
+      {/* Architecture Image Lightbox */}
+      <AnimatePresence>
+        {selectedDiagram && (
+          <motion.div
+            key="architecture-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] flex cursor-auto items-center justify-center bg-black/90 p-4 backdrop-blur-sm sm:p-8"
+            onClick={() => setSelectedDiagram(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedDiagram.title}
+          >
+            <motion.div
+              initial={{ scale: 0.94, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.96, y: 10 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative flex max-h-[92vh] w-full max-w-6xl cursor-auto flex-col overflow-hidden rounded-xl border border-zinc-700 bg-zinc-950 shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-center justify-between gap-4 border-b border-zinc-800 px-5 py-4">
+                <div>
+                  <p className="font-semibold text-white">
+                    {selectedDiagram.title}
+                  </p>
+                  <p className="mt-1 text-xs text-zinc-400">
+                    Project Architecture · Magna International
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedDiagram(null)}
+                  className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-zinc-600 text-2xl text-white transition-colors hover:bg-white hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  aria-label="Close architecture image"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="flex min-h-0 flex-1 cursor-zoom-in items-center justify-center overflow-auto bg-white p-2 sm:p-5">
+                <img
+                  src={selectedDiagram.src}
+                  alt={selectedDiagram.alt}
+                  className="max-h-[72vh] max-w-full object-contain"
+                />
+              </div>
+
+              <div className="border-t border-zinc-800 px-5 py-3">
+                <p className="text-sm text-zinc-400">
+                  {selectedDiagram.description}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -6,9 +6,7 @@ export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 export const linksInfo: NavLink[] = [
   { title: "About", path: "#about" },
   { title: "Skills", path: "#skills" },
-  { title: "Projects", path: "#projects" },
-  { title: "Research", path: "#research" },
-  { title: "Publications", path: "#publications" },
+  { title: "Projects", path: "#research" },
   { title: "Contact", path: "#contact" }
 ];
 
